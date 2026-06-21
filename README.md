@@ -99,6 +99,8 @@ Ao final das correções, o notebook contempla a totalidade das exigências téc
 
 ## 7. Referências
 
+
 - UCI Machine Learning Repository. Disponível em: archive.ics.uci.edu.
 - McKINNEY, Wes. *Python for Data Analysis*. 3. ed. O'Reilly, 2022.
+- O que é risco de Crédito? Serasa - https://www.serasa.com.br/credito/blog/entenda-o-que-e-risco-de-credito-e-por-que-ele-deve-ser-calculado/
 - Documentação oficial do Pandas. Disponível em: pandas.pydata.org/docs.
