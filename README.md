@@ -4,95 +4,13 @@ Trabalho Final Prático — Python & Pandas
 Disciplina: Novas Tecnologias / Ciência de Dados | Prof. William Malvezzi
 Grupo 03 — Tema 03 (Finanças e Risco de Crédito)
 
-## 1. Sobre este documento
+## 1. Sobre o projeto
 
-Este README descreve como executar o notebook `AnaliseCredito.ipynb` e documenta as revisões técnicas aplicadas à versão original do grupo para adequação aos requisitos do trabalho. As revisões foram feitas em duas rodadas, descritas nas Seções 4 e 5.
+Este projeto analisa a base *Default of Credit Card Clients*, do UCI Machine Learning Repository, com 30.000 clientes de cartão de crédito de Taiwan (2005). O objetivo é identificar quais características financeiras e comportamentais estão associadas à inadimplência no mês seguinte, por meio de oito perguntas de análise distribuídas entre os integrantes do grupo.
 
-## 2. Como executar o notebook
+O projeto é composto por quatro entregas: o notebook (`AnaliseCredito.ipynb`), a base de dados, o relatório em PDF e a apresentação em slides. Este README documenta o notebook.
 
-1. Abrir o arquivo `AnaliseCredito.ipynb` no Google Colab.
-2. Executar as células em ordem, de cima para baixo (`Ambiente de execução → Executar tudo`). O notebook não depende de upload manual de arquivo: a base é carregada diretamente do UCI Machine Learning Repository por meio da biblioteca `ucimlrepo` (`fetch_ucirepo(id=350)`), na célula do Passo 1.
-3. Não é necessário nenhum arquivo local adicional. A primeira célula de código instala a dependência `ucimlrepo` via `pip`.
-4. Tempo estimado de execução completa: poucos minutos, já que a base tem 30.000 linhas e nenhuma etapa do notebook depende de treinamento de modelo.
-
-### Bibliotecas e versões utilizadas
-
-| Biblioteca | Versão | Uso no notebook |
-|---|---|---|
-| pandas | 2.2.2 | Manipulação e análise de dados tabulares |
-| numpy | 2.0.2 | Operações matemáticas e lógica condicional (`np.where`, `np.select`) |
-| matplotlib | 3.x | Geração de gráficos |
-| seaborn | 0.13.x | Gráficos estatísticos (heatmap de correlação) |
-| ucimlrepo | 0.0.7 | Carregamento direto da base a partir do UCI ML Repository |
-
-As versões correspondem ao ambiente padrão do Google Colab no momento do desenvolvimento. A célula de configuração inicial do notebook imprime a versão de `pandas` e `numpy` efetivamente carregada em tempo de execução, permitindo conferência a qualquer momento.
-
-## 3. Estrutura do notebook
-
-O notebook segue a estrutura de passos definida no tutorial da disciplina:
-
-- Passo 0 — Configuração do ambiente e bibliotecas
-- Passo 1 — Carregamento da base de dados
-- Passo 2 — Compreensão inicial dos dados
-- Passo 3 — Dicionário de dados (tabela técnica)
-- Estatística descritiva aprofundada (média, mediana, desvio padrão, assimetria)
-- As 8 perguntas de análise exploratória, cada uma sob responsabilidade de um integrante do grupo (ver capa do relatório), com tratamento de dados, criação de variáveis, gráficos e interpretação textual associados
-- Indicadores sintéticos e conclusões
-
-## 4. Revisão técnica — primeira rodada
-
-Nesta etapa, duas seções específicas do notebook foram revisadas a pedido do grupo: a Pergunta 1 (Score de Risco) e a Pergunta 5 (Outliers em BILL_AMT com IQR). Em ambas, a lógica de código já estava correta e foi validada por execução, mas faltavam elementos exigidos pelo enunciado do trabalho.
-
-**Pergunta 1 — Score de Risco**
-- Adicionada célula de explicação conceitual ("o que vamos fazer e por quê") antes do bloco de código, conforme exigido para todas as seções do notebook.
-- Adicionado histograma da distribuição do score de risco, com média e mediana demarcadas.
-- Adicionado gráfico de dispersão (scatter) relacionando quantidade de atrasos e score de risco.
-- Adicionada validação cruzada entre a categoria de risco criada e a inadimplência real (`DEFAULT`), confirmando que o score proposto discrimina risco de forma consistente.
-- Adicionadas interpretações textuais para cada novo resultado.
-
-**Pergunta 5 — Outliers em BILL_AMT**
-- Adicionada célula de explicação conceitual antes do código original.
-- Adicionado box plot e histograma de `BILL_AMT1` com os limites do método IQR demarcados.
-- Estendida a aplicação do método IQR a uma segunda coluna numérica, `BILL_AMT3`, atendendo ao requisito de detecção de outliers em pelo menos duas variáveis. Foi incluído um box plot comparativo entre as duas colunas e a respectiva interpretação.
-- Atualizada a conclusão da seção para incorporar o resultado da segunda coluna analisada.
-
-Essa primeira rodada também teve como efeito colateral positivo cobrir, em todo o notebook, dois tipos de gráfico que ainda não apareciam em nenhuma outra seção do trabalho — histograma e gráfico de dispersão —, completando a exigência dos sete tipos de gráfico obrigatórios (barras, histograma, dispersão, linha, box plot, mapa de calor e gráfico de pizza/barras empilhadas).
-
-## 5. Revisão técnica — segunda rodada
-
-Após a primeira rodada, foi feita uma auditoria de cobertura comparando o conteúdo do notebook com a lista completa de técnicas obrigatórias de Pandas exigidas pelo enunciado do trabalho (Seção 2.1 do documento de instruções). Foram identificadas sete técnicas previstas no enunciado que ainda não constavam em nenhuma célula do notebook. Todas foram implementadas nesta rodada, descritas a seguir.
-
-**Dicionário de dados técnico.** Inserido logo após o Passo 2, complementando a tabela semântica já existente no início do notebook (coluna, tradução e significado). A nova tabela é gerada por código e apresenta, para cada uma das 25 colunas originais, o tipo de dado, a quantidade e o percentual de valores nulos, a quantidade de valores únicos e um exemplo real de valor. O resultado confirma a ausência de valores ausentes em toda a base.
-
-**Estatística descritiva aprofundada.** Inserida logo após o dicionário técnico. Foram calculadas média, mediana, desvio padrão e coeficiente de assimetria (skewness) para as variáveis `LIMIT_BAL` e `AGE`, com interpretação textual da diferença de comportamento entre uma variável monetária (fortemente assimétrica) e uma variável demográfica (distribuição mais regular).
-
-**Padronização de texto (`str.strip()` / `str.upper()`).** Inserida na Pergunta 2, logo após o mapeamento dos códigos numéricos de `SEX`, `EDUCATION` e `MARRIAGE` para rótulos textuais. A padronização evita que variações de espaçamento ou capitalização sejam tratadas como categorias distintas em operações de agrupamento.
-
-**Verificação de duplicatas (`drop_duplicates()`).** Inserida na sequência da padronização de texto. A verificação mostrou que não há linhas idênticas considerando todas as colunas, incluindo o identificador único (`ID`). Ao desconsiderar o `ID` e comparar apenas o perfil financeiro completo, foram encontrados 35 clientes com perfil idêntico a outro cliente da base — resultado documentado e mantido na análise, com justificativa estatística, em vez de removido.
-
-**Tabela cruzada (`pd.crosstab()`).** Inserida na Pergunta 2, na sequência da tabela pivô já existente. Cruza Sexo e Estado Civil em relação à condição de adimplência, complementando a leitura agregada da tabela pivô com a distribuição percentual completa por grupo.
-
-**Agrupamento multinível (`groupby` por duas ou mais colunas, com `.agg()` multimétrica).** Inserido na sequência do item anterior, agrupando simultaneamente por Sexo, Escolaridade e Estado Civil, com cálculo de total de clientes, taxa de inadimplência e limite de crédito médio por combinação. Combinações com menos de 50 clientes foram descartadas do ranking, evitando que grupos muito pequenos produzissem taxas estatisticamente instáveis.
-
-**Conversão de datas (`pd.to_datetime()`).** Inserida na Pergunta 8, antes da geração do gráfico de linha sobre evolução temporal da inadimplência. Como a base não possui uma coluna de data nativa — o período de cada coluna de pagamento está embutido no nome da coluna (`PAY_0` a `PAY_6`, referentes a abril a setembro de 2005) —, foi construída uma tabela de datas reais a partir dessa correspondência, com extração do nome do mês via `.dt.strftime()`. O gráfico de linha da Pergunta 8 passou a usar esses rótulos derivados da coluna de data, em vez de uma lista de texto fixa digitada manualmente.
-
-### Ajuste de compatibilidade decorrente da padronização de texto
-
-A introdução de `str.upper()` nas colunas categóricas alterou a capitalização dos valores de `EDUCATION` e `MARRIAGE` (por exemplo, de `"Pós-graduação"` para `"PÓS-GRADUAÇÃO"`). Duas células de código já existentes no notebook, responsáveis pela ordenação de categorias nos gráficos das seções 1.4 e 1.5, utilizavam listas de referência com a capitalização original e deixaram de encontrar correspondência após a padronização. As listas de referência (`ordem` e `ordem_civ`) foram atualizadas para o mesmo padrão de capitalização, eliminando o erro sem alterar a lógica original dessas células.
-
-### Validação de execução
-
-Após cada rodada de revisão, o notebook foi executado integralmente do início ao fim (equivalente a `Ambiente de execução → Executar tudo`), confirmando ausência de erros e de avisos (*warnings*) em qualquer célula. Como o ambiente de revisão não possui acesso à mesma rede do Google Colab, a validação foi feita substituindo, de forma temporária e apenas para fins de teste, a chamada `fetch_ucirepo(id=350)` por uma cópia local da mesma base de dados (arquivo oficial do UCI), reconstruída com a estrutura idêntica à retornada pela biblioteca `ucimlrepo` (colunas `X1` a `X23` e `Y`, incluindo `ID`). Essa substituição não está presente na versão final entregue, que mantém a chamada original à API do UCI.
-
-## 6. Cobertura final de requisitos técnicos
-
-Após as duas rodadas de revisão, o notebook contempla a totalidade das técnicas de Pandas e dos tipos de gráfico exigidos pelo enunciado do trabalho:
-
-- 15 de 15 técnicas obrigatórias de Pandas (Seção 2.1 do enunciado).
-- 7 de 7 tipos de gráfico obrigatórios (Seção 2.2 do enunciado): barras, histograma, dispersão, linha, box plot, mapa de calor e pizza/barras empilhadas.
-- 7 de 7 requisitos avançados pontuados (Seção 05 do enunciado): outliers por IQR em duas ou mais colunas, tabela pivô com duas ou mais dimensões, mapa de calor com interpretação das correlações mais fortes, box plot com interpretação de mediana e outliers, `apply` com função lambda não trivial, agrupamento multinível com agregação multimétrica, e interpretação estatística formal (média, mediana, desvio padrão e assimetria) para duas ou mais variáveis.
-
-## 7. Integrantes e divisão de responsabilidades
+## 2. Integrantes e divisão de responsabilidades
 
 | Integrante | Pergunta(s) sob responsabilidade |
 |---|---|
@@ -103,7 +21,83 @@ Após as duas rodadas de revisão, o notebook contempla a totalidade das técnic
 | Matheus Henrique | Pergunta 6 — Segmentação de perfis (clustering) |
 | Otávio Henrique do Nascimento Cunha | Pergunta 7 — Ranking de limite · Pergunta 8 — Piora progressiva |
 
-## 8. Referências
+## 3. Como executar o notebook
+
+1. Abrir `AnaliseCredito.ipynb` no Google Colab.
+2. Executar as células em ordem, do início ao fim (`Ambiente de execução → Executar tudo`).
+3. Não é necessário upload manual de arquivo: a base é carregada diretamente do UCI Machine Learning Repository pela biblioteca `ucimlrepo` (`fetch_ucirepo(id=350)`), na célula do Passo 1. A primeira célula de código instala essa dependência via `pip`.
+4. Tempo estimado de execução completa: poucos minutos. Nenhuma etapa do notebook depende de treinamento de modelo.
+
+### Bibliotecas utilizadas
+
+| Biblioteca | Versão | Uso no notebook |
+|---|---|---|
+| pandas | 2.2.2 | Leitura, limpeza, transformação e agregação dos dados (`groupby`, `pivot_table`, `crosstab`, `cut`, etc.) |
+| numpy | 2.0.2 | Operações matemáticas e lógica condicional vetorizada (`where`, `select`) |
+| matplotlib | 3.x | Geração de todos os gráficos do notebook (barras, histograma, dispersão, linha, box plot) |
+| seaborn | 0.13.x | Gráficos estatísticos, em especial o mapa de calor de correlação |
+| ucimlrepo | 0.0.7 | Carregamento direto da base a partir do UCI ML Repository, sem necessidade de download manual |
+
+As versões correspondem ao ambiente padrão do Google Colab no momento do desenvolvimento. A célula de configuração inicial do notebook imprime a versão de `pandas` e `numpy` efetivamente carregada, permitindo conferência a qualquer momento.
+
+## 4. Estrutura do notebook
+
+O notebook segue a sequência de passos definida no tutorial da disciplina:
+
+- **Passo 0** — Configuração do ambiente e bibliotecas
+- **Passo 1** — Carregamento da base de dados
+- **Passo 2** — Compreensão inicial dos dados
+- **Passo 3** — Dicionário de dados (tabela técnica) e estatística descritiva aprofundada (média, mediana, desvio padrão, assimetria)
+- **Passo 4 a 7** — Limpeza, tratamento e criação de variáveis, desenvolvidos dentro de cada uma das 8 perguntas de análise
+- **As 8 perguntas de análise exploratória**, cada uma sob responsabilidade de um integrante do grupo, com tratamento de dados, criação de variáveis derivadas, gráficos e interpretação textual
+- **Indicadores sintéticos e conclusões finais**
+
+## 5. Problemas encontrados e correções aplicadas
+
+Durante o desenvolvimento colaborativo do notebook, com várias pessoas editando seções diferentes, surgiram alguns problemas de execução e de cobertura de requisitos. Esta seção documenta o que foi encontrado e como foi corrigido.
+
+### 5.1 Erros de execução por recarregamento inconsistente do `df`
+
+Como cada integrante trabalhava em uma pergunta diferente, o DataFrame principal (`df`) era recarregado e renomeado várias vezes ao longo do notebook, o que gerava erros quando uma célula dependia de um nome de coluna que outra célula havia alterado ou revertido. Os erros mais comuns foram:
+
+- `KeyError: 'DEFAULT'` — uma célula nomeava a coluna-alvo como `default_payment`, enquanto outra esperava `DEFAULT`.
+- `KeyError: 'BILL_AMT1'` — uma célula redefinia `df` a partir de `base.data.features.copy()`, revertendo as colunas para os nomes originais (`X1`, `X12` etc.) e fazendo com que os nomes legíveis deixassem de existir.
+- `KeyError: 'LIMIT_BAL'` — mesma causa do item anterior, em outra pergunta.
+- Colunas de atraso referenciadas de forma inconsistente: parte do código usava `PAY_1`, que não existe no dataset (a sequência real é `PAY_0, PAY_2, PAY_3...`).
+
+**Correção:** foi adotada a função `copia_base_com_colunas_nomeadas(base)`, chamada no início de cada pergunta para recarregar o `df` já com os nomes de coluna padronizados, evitando que o trabalho de uma pergunta interferisse na seguinte. A lista oficial de colunas de atraso (`['PAY_0','PAY_2','PAY_3','PAY_4','PAY_5','PAY_6']`) foi padronizada e usada de forma consistente em todas as seções que dependem dela.
+
+### 5.2 Lacunas de cobertura em relação aos requisitos do trabalho
+
+Uma auditoria do notebook contra a lista de técnicas e gráficos obrigatórios do enunciado identificou itens previstos que ainda não apareciam em nenhuma célula. Todos foram implementados:
+
+- **Dicionário de dados técnico** (tipo, nulos, percentual de nulos, valores únicos e exemplo por coluna), inserido logo após a etapa de compreensão inicial dos dados. O resultado confirmou ausência de valores nulos em toda a base.
+- **Estatística descritiva aprofundada** (média, mediana, desvio padrão e assimetria) para as variáveis `LIMIT_BAL` e `AGE`, com interpretação da diferença entre uma variável monetária (fortemente assimétrica) e uma variável demográfica (distribuição mais regular).
+- **Padronização de texto** (`str.strip()` / `str.upper()`) aplicada às colunas `SEX`, `EDUCATION` e `MARRIAGE` após sua conversão de código numérico para rótulo textual.
+- **Verificação de duplicatas** (`drop_duplicates()`): não há linhas idênticas considerando todas as colunas (o `ID` é único por definição). Ao desconsiderar o `ID` e comparar apenas o perfil financeiro completo, foram encontrados 35 clientes com perfil idêntico ao de outro cliente da base — resultado mantido na análise, com a justificativa de que coincidências desse tipo são estatisticamente esperadas em uma base de 30.000 linhas com variáveis discretas de baixa cardinalidade, e não indicam erro de coleta.
+- **Tabela cruzada** (`pd.crosstab()`) de Sexo × Estado Civil, complementando a tabela pivô de Sexo × Escolaridade já existente.
+- **Agrupamento multinível** (`groupby` por Sexo, Escolaridade e Estado Civil simultaneamente, com `.agg()` calculando total de clientes, taxa de inadimplência e limite de crédito médio por combinação), descartando grupos com menos de 50 clientes para evitar taxas estatisticamente instáveis.
+- **Conversão de datas** (`pd.to_datetime()`): como a base não possui coluna de data nativa — o período de cada coluna de pagamento está embutido no nome da coluna (`PAY_0` a `PAY_6`, referentes a abril–setembro de 2005) —, foi construída uma tabela de datas reais a partir dessa correspondência, usada para gerar os rótulos do eixo X do gráfico de evolução temporal da Pergunta 8, em vez de uma lista de texto fixa.
+- **Histograma e gráfico de dispersão**, os únicos dois tipos de gráfico obrigatórios que ainda não apareciam em nenhuma seção do notebook, foram incluídos nas Perguntas 1 (score de risco) e 5 (outliers), completando a exigência dos sete tipos de gráfico do trabalho.
+- **Detecção de outliers em uma segunda coluna numérica**: a Pergunta 5 originalmente aplicava o método IQR apenas em `BILL_AMT1`; a análise foi estendida a `BILL_AMT3`, atendendo ao requisito de aplicar a técnica em pelo menos duas variáveis.
+
+### 5.3 Efeito colateral da padronização de texto
+
+A introdução de `str.upper()` nas colunas categóricas alterou a capitalização dos valores (por exemplo, de `"Pós-graduação"` para `"PÓS-GRADUAÇÃO"`). Duas células do notebook, responsáveis por ordenar categorias nos gráficos de inadimplência por escolaridade e por estado civil, usavam listas de referência com a capitalização original e deixaram de encontrar correspondência depois da padronização. As listas de referência foram atualizadas para o mesmo padrão de capitalização, eliminando o erro sem alterar a lógica original dessas células.
+
+### 5.4 Validação final
+
+Após as correções, o notebook foi executado integralmente do início ao fim (`Ambiente de execução → Executar tudo`), confirmando ausência de erros e de avisos em qualquer célula, com todas as 25 colunas, gráficos e tabelas sendo gerados corretamente em sequência.
+
+## 6. Cobertura de requisitos técnicos
+
+Ao final das correções, o notebook contempla a totalidade das exigências técnicas do enunciado:
+
+- 15 de 15 técnicas obrigatórias de Pandas (leitura de dados, inspeção, tratamento de nulos e duplicatas, padronização de texto, conversão de datas, `groupby`/`agg`, `crosstab`, `np.where`/`np.select`, `cut`/`qcut`, `pivot_table`, `corr()`, IQR manual, `apply` com lambda, e agrupamento multinível).
+- 7 de 7 tipos de gráfico obrigatórios: barras, histograma, dispersão, linha, box plot, mapa de calor e pizza/barras empilhadas.
+- 7 de 7 requisitos avançados pontuados: outliers por IQR em duas ou mais colunas, tabela pivô com duas ou mais dimensões, mapa de calor com interpretação das correlações mais fortes, box plot com interpretação de mediana e outliers, `apply` com lambda em lógica não trivial, agrupamento multinível com agregação multimétrica, e interpretação estatística formal de média, mediana, desvio padrão e assimetria.
+
+## 7. Referências
 
 - UCI Machine Learning Repository. Disponível em: archive.ics.uci.edu.
 - McKINNEY, Wes. *Python for Data Analysis*. 3. ed. O'Reilly, 2022.
