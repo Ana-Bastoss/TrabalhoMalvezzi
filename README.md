@@ -4,7 +4,7 @@ Trabalho Final Prático — Python & Pandas
 Disciplina: Novas Tecnologias / Ciência de Dados | Prof. William Malvezzi
 Grupo 03 — Tema 03 (Finanças e Risco de Crédito)
 
-[VÍDEO NO YOUTUBE] (https://youtu.be/ghIW78122p8)
+[VÍDEO NO YOUTUBE](https://youtu.be/ghIW78122p8)
 
 ## 1. Sobre o projeto
 
