@@ -4,6 +4,8 @@ Trabalho Final Prático — Python & Pandas
 Disciplina: Novas Tecnologias / Ciência de Dados | Prof. William Malvezzi
 Grupo 03 — Tema 03 (Finanças e Risco de Crédito)
 
+[VÍDEO NO YOUTUBE] (https://youtu.be/ghIW78122p8)
+
 ## 1. Sobre o projeto
 
 Este projeto analisa a base *Default of Credit Card Clients*, do UCI Machine Learning Repository, com 30.000 clientes de cartão de crédito de Taiwan (2005). O objetivo é identificar quais características financeiras e comportamentais estão associadas à inadimplência no mês seguinte, por meio de oito perguntas de análise distribuídas entre os integrantes do grupo.
